@@ -141,14 +141,23 @@ def order_book(orders, book, stock_name):
 #
 # Test Data Persistence
 
+
+# error resolved
+# Traceback (most recent call last):
+#   File "C:\Users\hyatt\PycharmProjects\forage-jpmc-swe-task-3\datafeed\server3.py", line 319, in <module>
+#     generate_csv()
+#   File "C:\Users\hyatt\PycharmProjects\forage-jpmc-swe-task-3\datafeed\server3.py", line 151, in generate_csv
+#     writer.writerow([t, stock, side, order, size])
+# TypeError: a bytes-like object is required, not 'str'
 def generate_csv():
     """ Generate a CSV of order history. """
-    with open('test.csv', 'wb') as f:
+    with open('test.csv', 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         for t, stock, side, order, size in orders(market()):
             if t > MARKET_OPEN + SIM_LENGTH:
                 break
             writer.writerow([t, stock, side, order, size])
+
 
 def read_csv():
     """ Read a CSV or order history into a list. """
