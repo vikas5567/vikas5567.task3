@@ -1,0 +1,6 @@
+Unable to run server after forking from main repo with 'python datafeed/server3.py and npm start' -> must do the following to get it running locally: 
+1) npx update-browserlist-db@latest
+2) npm install fsevents@latest --save
+3) npm run build
+4) npm install -g serve
+5) serve -s build 
