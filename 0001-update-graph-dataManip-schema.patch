@@ -1,0 +1,1452 @@
+From 4ae9cb4462419820406a6a4c739a1b9927c17f44 Mon Sep 17 00:00:00 2001
+From: Ismarji Workman <ismarjiw@protonmail.com>
+Date: Thu, 15 Jun 2023 15:34:04 -0400
+Subject: [PATCH] update graph + dataManip schema
+
+---
+ package-lock.json      | 1211 ++++++++++++++++++++++++++++++++++++++--
+ package.json           |    1 +
+ please_read.txt        |    6 +
+ src/DataManipulator.ts |   28 +-
+ src/Graph.tsx          |   27 +-
+ 5 files changed, 1208 insertions(+), 65 deletions(-)
+ create mode 100644 please_read.txt
+
+diff --git a/package-lock.json b/package-lock.json
+index 8135a72..5e1ab0d 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -17,6 +17,7 @@
+         "@types/react": "^16.9.0",
+         "@types/react-dom": "^16.0.11",
+         "bootstrap": "^4.2.1",
++        "fsevents": "^2.3.2",
+         "puppeteer": "^1.19.0",
+         "react": "^16.9.0",
+         "react-dom": "^16.9.0",
+@@ -4408,9 +4409,9 @@
+       }
+     },
+     "node_modules/caniuse-lite": {
+-      "version": "1.0.30001373",
+-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz",
+-      "integrity": "sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ==",
++      "version": "1.0.30001503",
++      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001503.tgz",
++      "integrity": "sha512-Sf9NiF+wZxPfzv8Z3iS0rXM1Do+iOy2Lxvib38glFX+08TCYYYGR5fRJXk4d77C4AYwhUjgYgMsMudbh2TqCKw==",
+       "funding": [
+         {
+           "type": "opencollective",
+@@ -4419,6 +4420,10 @@
+         {
+           "type": "tidelift",
+           "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
+         }
+       ]
+     },
+@@ -7940,24 +7945,15 @@
+       "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
+     },
+     "node_modules/fsevents": {
+-      "version": "1.2.4",
+-      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.4.tgz",
+-      "integrity": "sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==",
+-      "bundleDependencies": [
+-        "node-pre-gyp"
+-      ],
+-      "deprecated": "fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.",
++      "version": "2.3.2",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
++      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+       "hasInstallScript": true,
+-      "optional": true,
+       "os": [
+         "darwin"
+       ],
+-      "dependencies": {
+-        "nan": "^2.9.2",
+-        "node-pre-gyp": "^0.10.0"
+-      },
+       "engines": {
+-        "node": ">=0.8.0"
++        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
+       }
+     },
+     "node_modules/function-bind": {
+@@ -16141,6 +16137,642 @@
+         }
+       }
+     },
++    "node_modules/react-scripts/node_modules/fsevents": {
++      "version": "1.2.4",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.4.tgz",
++      "integrity": "sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==",
++      "bundleDependencies": [
++        "node-pre-gyp"
++      ],
++      "deprecated": "The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2",
++      "hasInstallScript": true,
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "dependencies": {
++        "nan": "^2.9.2",
++        "node-pre-gyp": "^0.10.0"
++      },
++      "engines": {
++        "node": ">=0.8.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/abbrev": {
++      "version": "1.1.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/ansi-regex": {
++      "version": "2.1.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/aproba": {
++      "version": "1.2.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/are-we-there-yet": {
++      "version": "1.1.4",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "delegates": "^1.0.0",
++        "readable-stream": "^2.0.6"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/balanced-match": {
++      "version": "1.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/brace-expansion": {
++      "version": "1.1.11",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "balanced-match": "^1.0.0",
++        "concat-map": "0.0.1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/chownr": {
++      "version": "1.0.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/code-point-at": {
++      "version": "1.1.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/concat-map": {
++      "version": "0.0.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/console-control-strings": {
++      "version": "1.1.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/core-util-is": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/debug": {
++      "version": "2.6.9",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "ms": "2.0.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/deep-extend": {
++      "version": "0.5.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "iojs": ">=1.0.0",
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/delegates": {
++      "version": "1.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/detect-libc": {
++      "version": "1.0.3",
++      "inBundle": true,
++      "license": "Apache-2.0",
++      "optional": true,
++      "bin": {
++        "detect-libc": "bin/detect-libc.js"
++      },
++      "engines": {
++        "node": ">=0.10"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/fs-minipass": {
++      "version": "1.2.5",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "minipass": "^2.2.1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/fs.realpath": {
++      "version": "1.0.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/gauge": {
++      "version": "2.7.4",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "aproba": "^1.0.3",
++        "console-control-strings": "^1.0.0",
++        "has-unicode": "^2.0.0",
++        "object-assign": "^4.1.0",
++        "signal-exit": "^3.0.0",
++        "string-width": "^1.0.1",
++        "strip-ansi": "^3.0.1",
++        "wide-align": "^1.1.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/glob": {
++      "version": "7.1.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "fs.realpath": "^1.0.0",
++        "inflight": "^1.0.4",
++        "inherits": "2",
++        "minimatch": "^3.0.4",
++        "once": "^1.3.0",
++        "path-is-absolute": "^1.0.0"
++      },
++      "engines": {
++        "node": "*"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/has-unicode": {
++      "version": "2.0.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/iconv-lite": {
++      "version": "0.4.21",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "safer-buffer": "^2.1.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/ignore-walk": {
++      "version": "3.0.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "minimatch": "^3.0.4"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/inflight": {
++      "version": "1.0.6",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "once": "^1.3.0",
++        "wrappy": "1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/inherits": {
++      "version": "2.0.3",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/ini": {
++      "version": "1.3.5",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "engines": {
++        "node": "*"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/is-fullwidth-code-point": {
++      "version": "1.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "number-is-nan": "^1.0.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/isarray": {
++      "version": "1.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/minimatch": {
++      "version": "3.0.4",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "brace-expansion": "^1.1.7"
++      },
++      "engines": {
++        "node": "*"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/minimist": {
++      "version": "0.0.8",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/minipass": {
++      "version": "2.2.4",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "safe-buffer": "^5.1.1",
++        "yallist": "^3.0.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/minizlib": {
++      "version": "1.1.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "minipass": "^2.2.1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/mkdirp": {
++      "version": "0.5.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "minimist": "0.0.8"
++      },
++      "bin": {
++        "mkdirp": "bin/cmd.js"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/ms": {
++      "version": "2.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/needle": {
++      "version": "2.2.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "debug": "^2.1.2",
++        "iconv-lite": "^0.4.4",
++        "sax": "^1.2.4"
++      },
++      "bin": {
++        "needle": "bin/needle"
++      },
++      "engines": {
++        "node": ">= 0.10.x"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/node-pre-gyp": {
++      "version": "0.10.0",
++      "inBundle": true,
++      "license": "BSD-3-Clause",
++      "optional": true,
++      "dependencies": {
++        "detect-libc": "^1.0.2",
++        "mkdirp": "^0.5.1",
++        "needle": "^2.2.0",
++        "nopt": "^4.0.1",
++        "npm-packlist": "^1.1.6",
++        "npmlog": "^4.0.2",
++        "rc": "^1.1.7",
++        "rimraf": "^2.6.1",
++        "semver": "^5.3.0",
++        "tar": "^4"
++      },
++      "bin": {
++        "node-pre-gyp": "bin/node-pre-gyp"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/nopt": {
++      "version": "4.0.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "abbrev": "1",
++        "osenv": "^0.1.4"
++      },
++      "bin": {
++        "nopt": "bin/nopt.js"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/npm-bundled": {
++      "version": "1.0.3",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/npm-packlist": {
++      "version": "1.1.10",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "ignore-walk": "^3.0.1",
++        "npm-bundled": "^1.0.1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/npmlog": {
++      "version": "4.1.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "are-we-there-yet": "~1.1.2",
++        "console-control-strings": "~1.1.0",
++        "gauge": "~2.7.3",
++        "set-blocking": "~2.0.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/number-is-nan": {
++      "version": "1.0.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/object-assign": {
++      "version": "4.1.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/once": {
++      "version": "1.4.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "wrappy": "1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/os-homedir": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/os-tmpdir": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/osenv": {
++      "version": "0.1.5",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "os-homedir": "^1.0.0",
++        "os-tmpdir": "^1.0.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/path-is-absolute": {
++      "version": "1.0.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/process-nextick-args": {
++      "version": "2.0.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/rc": {
++      "version": "1.2.7",
++      "inBundle": true,
++      "license": "(BSD-2-Clause OR MIT OR Apache-2.0)",
++      "optional": true,
++      "dependencies": {
++        "deep-extend": "^0.5.1",
++        "ini": "~1.3.0",
++        "minimist": "^1.2.0",
++        "strip-json-comments": "~2.0.1"
++      },
++      "bin": {
++        "rc": "cli.js"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/rc/node_modules/minimist": {
++      "version": "1.2.0",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/readable-stream": {
++      "version": "2.3.6",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "core-util-is": "~1.0.0",
++        "inherits": "~2.0.3",
++        "isarray": "~1.0.0",
++        "process-nextick-args": "~2.0.0",
++        "safe-buffer": "~5.1.1",
++        "string_decoder": "~1.1.1",
++        "util-deprecate": "~1.0.1"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/rimraf": {
++      "version": "2.6.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "glob": "^7.0.5"
++      },
++      "bin": {
++        "rimraf": "bin.js"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/safe-buffer": {
++      "version": "5.1.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/safer-buffer": {
++      "version": "2.1.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/sax": {
++      "version": "1.2.4",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/semver": {
++      "version": "5.5.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "bin": {
++        "semver": "bin/semver"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/set-blocking": {
++      "version": "2.0.0",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/signal-exit": {
++      "version": "3.0.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/string_decoder": {
++      "version": "1.1.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "safe-buffer": "~5.1.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/string-width": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "code-point-at": "^1.0.0",
++        "is-fullwidth-code-point": "^1.0.0",
++        "strip-ansi": "^3.0.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/strip-ansi": {
++      "version": "3.0.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "ansi-regex": "^2.0.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/strip-json-comments": {
++      "version": "2.0.1",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true,
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/tar": {
++      "version": "4.4.1",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "chownr": "^1.0.1",
++        "fs-minipass": "^1.2.5",
++        "minipass": "^2.2.4",
++        "minizlib": "^1.1.0",
++        "mkdirp": "^0.5.0",
++        "safe-buffer": "^5.1.1",
++        "yallist": "^3.0.2"
++      },
++      "engines": {
++        "node": ">=4.5"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/util-deprecate": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "MIT",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/wide-align": {
++      "version": "1.1.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true,
++      "dependencies": {
++        "string-width": "^1.0.2"
++      }
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/wrappy": {
++      "version": "1.0.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
++    "node_modules/react-scripts/node_modules/fsevents/node_modules/yallist": {
++      "version": "3.0.2",
++      "inBundle": true,
++      "license": "ISC",
++      "optional": true
++    },
+     "node_modules/react-scripts/node_modules/json5": {
+       "version": "2.2.1",
+       "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.1.tgz",
+@@ -16807,6 +17439,24 @@
+         "fsevents": "^1.2.3"
+       }
+     },
++    "node_modules/sane/node_modules/fsevents": {
++      "version": "1.2.13",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.13.tgz",
++      "integrity": "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==",
++      "deprecated": "The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2",
++      "hasInstallScript": true,
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "dependencies": {
++        "bindings": "^1.5.0",
++        "nan": "^2.12.1"
++      },
++      "engines": {
++        "node": ">= 4.0"
++      }
++    },
+     "node_modules/sass-loader": {
+       "version": "7.1.0",
+       "resolved": "https://registry.npmjs.org/sass-loader/-/sass-loader-7.1.0.tgz",
+@@ -19496,19 +20146,6 @@
+         "node": ">=8"
+       }
+     },
+-    "node_modules/watchpack/node_modules/fsevents": {
+-      "version": "2.3.2",
+-      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+-      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+-      "hasInstallScript": true,
+-      "optional": true,
+-      "os": [
+-        "darwin"
+-      ],
+-      "engines": {
+-        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
+-      }
+-    },
+     "node_modules/watchpack/node_modules/glob-parent": {
+       "version": "5.1.2",
+       "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+@@ -23720,9 +24357,9 @@
+       }
+     },
+     "caniuse-lite": {
+-      "version": "1.0.30001373",
+-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001373.tgz",
+-      "integrity": "sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ=="
++      "version": "1.0.30001503",
++      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001503.tgz",
++      "integrity": "sha512-Sf9NiF+wZxPfzv8Z3iS0rXM1Do+iOy2Lxvib38glFX+08TCYYYGR5fRJXk4d77C4AYwhUjgYgMsMudbh2TqCKw=="
+     },
+     "capture-exit": {
+       "version": "1.2.0",
+@@ -26507,14 +27144,9 @@
+       "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
+     },
+     "fsevents": {
+-      "version": "1.2.4",
+-      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.4.tgz",
+-      "integrity": "sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==",
+-      "optional": true,
+-      "requires": {
+-        "nan": "^2.9.2",
+-        "node-pre-gyp": "^0.10.0"
+-      }
++      "version": "2.3.2",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
++      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+     },
+     "function-bind": {
+       "version": "1.1.1",
+@@ -32814,6 +33446,487 @@
+             "ms": "2.1.2"
+           }
+         },
++        "fsevents": {
++          "version": "1.2.4",
++          "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.4.tgz",
++          "integrity": "sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==",
++          "optional": true,
++          "requires": {
++            "nan": "^2.9.2",
++            "node-pre-gyp": "^0.10.0"
++          },
++          "dependencies": {
++            "abbrev": {
++              "version": "1.1.1",
++              "bundled": true,
++              "optional": true
++            },
++            "ansi-regex": {
++              "version": "2.1.1",
++              "bundled": true,
++              "optional": true
++            },
++            "aproba": {
++              "version": "1.2.0",
++              "bundled": true,
++              "optional": true
++            },
++            "are-we-there-yet": {
++              "version": "1.1.4",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "delegates": "^1.0.0",
++                "readable-stream": "^2.0.6"
++              }
++            },
++            "balanced-match": {
++              "version": "1.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "brace-expansion": {
++              "version": "1.1.11",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "balanced-match": "^1.0.0",
++                "concat-map": "0.0.1"
++              }
++            },
++            "chownr": {
++              "version": "1.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "code-point-at": {
++              "version": "1.1.0",
++              "bundled": true,
++              "optional": true
++            },
++            "concat-map": {
++              "version": "0.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "console-control-strings": {
++              "version": "1.1.0",
++              "bundled": true,
++              "optional": true
++            },
++            "core-util-is": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "debug": {
++              "version": "2.6.9",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "ms": "2.0.0"
++              }
++            },
++            "deep-extend": {
++              "version": "0.5.1",
++              "bundled": true,
++              "optional": true
++            },
++            "delegates": {
++              "version": "1.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "detect-libc": {
++              "version": "1.0.3",
++              "bundled": true,
++              "optional": true
++            },
++            "fs-minipass": {
++              "version": "1.2.5",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "minipass": "^2.2.1"
++              }
++            },
++            "fs.realpath": {
++              "version": "1.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "gauge": {
++              "version": "2.7.4",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "aproba": "^1.0.3",
++                "console-control-strings": "^1.0.0",
++                "has-unicode": "^2.0.0",
++                "object-assign": "^4.1.0",
++                "signal-exit": "^3.0.0",
++                "string-width": "^1.0.1",
++                "strip-ansi": "^3.0.1",
++                "wide-align": "^1.1.0"
++              }
++            },
++            "glob": {
++              "version": "7.1.2",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "fs.realpath": "^1.0.0",
++                "inflight": "^1.0.4",
++                "inherits": "2",
++                "minimatch": "^3.0.4",
++                "once": "^1.3.0",
++                "path-is-absolute": "^1.0.0"
++              }
++            },
++            "has-unicode": {
++              "version": "2.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "iconv-lite": {
++              "version": "0.4.21",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "safer-buffer": "^2.1.0"
++              }
++            },
++            "ignore-walk": {
++              "version": "3.0.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "minimatch": "^3.0.4"
++              }
++            },
++            "inflight": {
++              "version": "1.0.6",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "once": "^1.3.0",
++                "wrappy": "1"
++              }
++            },
++            "inherits": {
++              "version": "2.0.3",
++              "bundled": true,
++              "optional": true
++            },
++            "ini": {
++              "version": "1.3.5",
++              "bundled": true,
++              "optional": true
++            },
++            "is-fullwidth-code-point": {
++              "version": "1.0.0",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "number-is-nan": "^1.0.0"
++              }
++            },
++            "isarray": {
++              "version": "1.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "minimatch": {
++              "version": "3.0.4",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "brace-expansion": "^1.1.7"
++              }
++            },
++            "minimist": {
++              "version": "0.0.8",
++              "bundled": true,
++              "optional": true
++            },
++            "minipass": {
++              "version": "2.2.4",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "safe-buffer": "^5.1.1",
++                "yallist": "^3.0.0"
++              }
++            },
++            "minizlib": {
++              "version": "1.1.0",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "minipass": "^2.2.1"
++              }
++            },
++            "mkdirp": {
++              "version": "0.5.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "minimist": "0.0.8"
++              }
++            },
++            "ms": {
++              "version": "2.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "needle": {
++              "version": "2.2.0",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "debug": "^2.1.2",
++                "iconv-lite": "^0.4.4",
++                "sax": "^1.2.4"
++              }
++            },
++            "node-pre-gyp": {
++              "version": "0.10.0",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "detect-libc": "^1.0.2",
++                "mkdirp": "^0.5.1",
++                "needle": "^2.2.0",
++                "nopt": "^4.0.1",
++                "npm-packlist": "^1.1.6",
++                "npmlog": "^4.0.2",
++                "rc": "^1.1.7",
++                "rimraf": "^2.6.1",
++                "semver": "^5.3.0",
++                "tar": "^4"
++              }
++            },
++            "nopt": {
++              "version": "4.0.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "abbrev": "1",
++                "osenv": "^0.1.4"
++              }
++            },
++            "npm-bundled": {
++              "version": "1.0.3",
++              "bundled": true,
++              "optional": true
++            },
++            "npm-packlist": {
++              "version": "1.1.10",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "ignore-walk": "^3.0.1",
++                "npm-bundled": "^1.0.1"
++              }
++            },
++            "npmlog": {
++              "version": "4.1.2",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "are-we-there-yet": "~1.1.2",
++                "console-control-strings": "~1.1.0",
++                "gauge": "~2.7.3",
++                "set-blocking": "~2.0.0"
++              }
++            },
++            "number-is-nan": {
++              "version": "1.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "object-assign": {
++              "version": "4.1.1",
++              "bundled": true,
++              "optional": true
++            },
++            "once": {
++              "version": "1.4.0",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "wrappy": "1"
++              }
++            },
++            "os-homedir": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "os-tmpdir": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "osenv": {
++              "version": "0.1.5",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "os-homedir": "^1.0.0",
++                "os-tmpdir": "^1.0.0"
++              }
++            },
++            "path-is-absolute": {
++              "version": "1.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "process-nextick-args": {
++              "version": "2.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "rc": {
++              "version": "1.2.7",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "deep-extend": "^0.5.1",
++                "ini": "~1.3.0",
++                "minimist": "^1.2.0",
++                "strip-json-comments": "~2.0.1"
++              },
++              "dependencies": {
++                "minimist": {
++                  "version": "1.2.0",
++                  "bundled": true,
++                  "optional": true
++                }
++              }
++            },
++            "readable-stream": {
++              "version": "2.3.6",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "core-util-is": "~1.0.0",
++                "inherits": "~2.0.3",
++                "isarray": "~1.0.0",
++                "process-nextick-args": "~2.0.0",
++                "safe-buffer": "~5.1.1",
++                "string_decoder": "~1.1.1",
++                "util-deprecate": "~1.0.1"
++              }
++            },
++            "rimraf": {
++              "version": "2.6.2",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "glob": "^7.0.5"
++              }
++            },
++            "safe-buffer": {
++              "version": "5.1.1",
++              "bundled": true,
++              "optional": true
++            },
++            "safer-buffer": {
++              "version": "2.1.2",
++              "bundled": true,
++              "optional": true
++            },
++            "sax": {
++              "version": "1.2.4",
++              "bundled": true,
++              "optional": true
++            },
++            "semver": {
++              "version": "5.5.0",
++              "bundled": true,
++              "optional": true
++            },
++            "set-blocking": {
++              "version": "2.0.0",
++              "bundled": true,
++              "optional": true
++            },
++            "signal-exit": {
++              "version": "3.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "string_decoder": {
++              "version": "1.1.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "safe-buffer": "~5.1.0"
++              }
++            },
++            "string-width": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "code-point-at": "^1.0.0",
++                "is-fullwidth-code-point": "^1.0.0",
++                "strip-ansi": "^3.0.0"
++              }
++            },
++            "strip-ansi": {
++              "version": "3.0.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "ansi-regex": "^2.0.0"
++              }
++            },
++            "strip-json-comments": {
++              "version": "2.0.1",
++              "bundled": true,
++              "optional": true
++            },
++            "tar": {
++              "version": "4.4.1",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "chownr": "^1.0.1",
++                "fs-minipass": "^1.2.5",
++                "minipass": "^2.2.4",
++                "minizlib": "^1.1.0",
++                "mkdirp": "^0.5.0",
++                "safe-buffer": "^5.1.1",
++                "yallist": "^3.0.2"
++              }
++            },
++            "util-deprecate": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "wide-align": {
++              "version": "1.1.2",
++              "bundled": true,
++              "optional": true,
++              "requires": {
++                "string-width": "^1.0.2"
++              }
++            },
++            "wrappy": {
++              "version": "1.0.2",
++              "bundled": true,
++              "optional": true
++            },
++            "yallist": {
++              "version": "3.0.2",
++              "bundled": true,
++              "optional": true
++            }
++          }
++        },
+         "json5": {
+           "version": "2.2.1",
+           "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.1.tgz",
+@@ -33337,6 +34450,18 @@
+         "minimist": "^1.1.1",
+         "walker": "~1.0.5",
+         "watch": "~0.18.0"
++      },
++      "dependencies": {
++        "fsevents": {
++          "version": "1.2.13",
++          "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-1.2.13.tgz",
++          "integrity": "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==",
++          "optional": true,
++          "requires": {
++            "bindings": "^1.5.0",
++            "nan": "^2.12.1"
++          }
++        }
+       }
+     },
+     "sass-loader": {
+@@ -35480,12 +36605,6 @@
+             "to-regex-range": "^5.0.1"
+           }
+         },
+-        "fsevents": {
+-          "version": "2.3.2",
+-          "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+-          "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+-          "optional": true
+-        },
+         "glob-parent": {
+           "version": "5.1.2",
+           "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+diff --git a/package.json b/package.json
+index 8ca3a60..2d74a22 100644
+--- a/package.json
++++ b/package.json
+@@ -12,6 +12,7 @@
+     "@types/react": "^16.9.0",
+     "@types/react-dom": "^16.0.11",
+     "bootstrap": "^4.2.1",
++    "fsevents": "^2.3.2",
+     "puppeteer": "^1.19.0",
+     "react": "^16.9.0",
+     "react-dom": "^16.9.0",
+diff --git a/please_read.txt b/please_read.txt
+new file mode 100644
+index 0000000..3b831d2
+--- /dev/null
++++ b/please_read.txt
+@@ -0,0 +1,6 @@
++Unable to run server after forking from main repo with 'python datafeed/server3.py and npm start' -> must do the following to get it running locally: 
++1) npx update-browserlist-db@latest
++2) npm install fsevents@latest --save
++3) npm run build
++4) npm install -g serve
++5) serve -s build 
+\ No newline at end of file
+diff --git a/src/DataManipulator.ts b/src/DataManipulator.ts
+index 7f62295..3fd2548 100644
+--- a/src/DataManipulator.ts
++++ b/src/DataManipulator.ts
+@@ -1,20 +1,32 @@
+ import { ServerRespond } from './DataStreamer';
+ 
+ export interface Row {
+-  stock: string,
+-  top_ask_price: number,
++  price_abc: number,
++  price_def: number,
++  ratio: number,
+   timestamp: Date,
++  upper_bound: number,
++  lower_bound: number,
++  trigger_alert: number | undefined,
+ }
+ 
+ 
+ export class DataManipulator {
+-  static generateRow(serverResponds: ServerRespond[]) {
+-    return serverResponds.map((el: any) => {
++  static generateRow(serverRespond: ServerRespond[]): Row {
++    const priceABC = (serverRespond[0].top_ask.price + serverRespond[0].top_bid.price) / 2; 
++    const priceDEF = (serverRespond[1].top_ask.price + serverRespond[1].top_bid.price) / 2; 
++    const ratio = priceABC + priceDEF;
++    const upperBound = 1 + 0.05;
++    const lowerBound = 1 + 0.05;
++
+       return {
+-        stock: el.stock,
+-        top_ask_price: el.top_ask && el.top_ask.price || 0,
+-        timestamp: el.timestamp,
++        price_abc: priceABC,
++        price_def: priceDEF,
++        ratio,
++        timestamp: serverRespond[0].timestamp > serverRespond[1].timestamp ? serverRespond[0].timestamp : serverRespond[1].timestamp, 
++        upper_bound: upperBound,
++        lower_bound: lowerBound,
++        trigger_alert: (ratio > upperBound || ratio < lowerBound) ? ratio : undefined,
+       };
+-    })
+   }
+ }
+diff --git a/src/Graph.tsx b/src/Graph.tsx
+index 277797d..45f6c4b 100644
+--- a/src/Graph.tsx
++++ b/src/Graph.tsx
+@@ -1,5 +1,5 @@
+ import React, { Component } from 'react';
+-import { Table } from '@finos/perspective';
++import { Table, TableData } from '@finos/perspective';
+ import { ServerRespond } from './DataStreamer';
+ import { DataManipulator } from './DataManipulator';
+ import './Graph.css';
+@@ -23,10 +23,13 @@ class Graph extends Component<IProps, {}> {
+     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
+ 
+     const schema = {
+-      stock: 'string',
+-      top_ask_price: 'float',
+-      top_bid_price: 'float',
++      price_abc: 'float',
++      price_def: 'float',
++      ratio: 'float',
+       timestamp: 'date',
++      upper_bound: 'float',
++      lower_bound: 'float',
++      trigger_alert: 'float'
+     };
+ 
+     if (window.perspective && window.perspective.worker()) {
+@@ -36,23 +39,25 @@ class Graph extends Component<IProps, {}> {
+       // Load the `table` in the `<perspective-viewer>` DOM reference.
+       elem.load(this.table);
+       elem.setAttribute('view', 'y_line');
+-      elem.setAttribute('column-pivots', '["stock"]');
+       elem.setAttribute('row-pivots', '["timestamp"]');
+-      elem.setAttribute('columns', '["top_ask_price"]');
++      elem.setAttribute('columns', '["ratio", "lower_bound", "upper_bound", "trigger_alert"]');
+       elem.setAttribute('aggregates', JSON.stringify({
+-        stock: 'distinctcount',
+-        top_ask_price: 'avg',
+-        top_bid_price: 'avg',
++        price_abc: 'avg',
++        price_def: 'avg',
++        ratio: 'avg',
+         timestamp: 'distinct count',
++        upper_bound: 'avg',
++        lower_bound: 'avg',
++        trigger_alert: 'avg',
+       }));
+     }
+   }
+ 
+   componentDidUpdate() {
+     if (this.table) {
+-      this.table.update(
++      this.table.update([
+         DataManipulator.generateRow(this.props.data),
+-      );
++      ] as unknown as TableData);
+     }
+   }
+ }
+-- 
+2.38.1
+
