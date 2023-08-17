@@ -1,32 +1,32 @@
 import { ServerRespond } from './DataStreamer';
 
 export interface Row {
-  price_abc: number,
-  price_def: number,
+  TimeStamp: Date,
+  ABCStockPrice: number,
+  DEFStockPrice: number,
   ratio: number,
-  timestamp: Date,
-  upper_bound: number,
-  lower_bound: number,
-  trigger_alert: number | undefined,
+  upperBound: number,
+  lowerBound: number,
+  priceAlert: number | undefined,
 }
 
 
 export class DataManipulator {
   static generateRow(serverResponds: ServerRespond[]): Row{
-    const priceABC = (serverResponds[0].top_ask.price + serverResponds[0].top_bid.price)/2;
-    const priceDEF = (serverResponds[1].top_ask.price + serverResponds[1].top_bid.price)/2;
-    const ratio = priceABC / priceDEF;
-    const upper = 1 + 0.05;
-    const lower = 1 - 0.05;
+    const ABC = (serverResponds[0].top_ask.price + serverResponds[0].top_bid.price)/2;
+    const DEF = (serverResponds[1].top_ask.price + serverResponds[1].top_bid.price)/2;
+    const ratio = ABC / DEF;
+    const upper = 1.05;
+    const lower = 0.97;
     return {
-      price_abc: priceABC,
-      price_def: priceDEF,
+      TimeStamp: (serverResponds[0].timestamp < serverResponds[1].timestamp) ? 
+                  serverResponds[1].timestamp : serverResponds[0].timestamp,
+      ABCStockPrice: ABC,
+      DEFStockPrice: DEF,
       ratio,
-      timestamp: (serverResponds[0].timestamp > serverResponds[1].timestamp) ? 
-                  serverResponds[0].timestamp : serverResponds[1].timestamp,
-      upper_bound: upper,
-      lower_bound: lower,
-      trigger_alert: (ratio > upper || ratio < lower) ? ratio : undefined,
+      upperBound: upper,
+      lowerBound: lower,
+      priceAlert: (ratio > upper || ratio < lower) ? ratio : undefined,
     };
   }
 }

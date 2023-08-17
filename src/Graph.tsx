@@ -23,13 +23,13 @@ class Graph extends Component<IProps, {}> {
     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
     const schema = {
-      price_abc: 'float',
-      price_def: 'float',
+      TimeStamp: 'date',
+      ABCStockPrice: 'float',
+      DEFStockPrice: 'float',
       ratio: 'float',
-      timestamp: 'date',
-      upper_bound: 'float',
-      lower_bound: 'float',
-      trigger_alert: 'float',
+      upperBound: 'float',
+      lowerBound: 'float',
+      priceAlert: 'float',
     };
 
     if (window.perspective && window.perspective.worker()) {
@@ -39,16 +39,16 @@ class Graph extends Component<IProps, {}> {
       // Load the `table` in the `<perspective-viewer>` DOM reference.
       elem.load(this.table);
       elem.setAttribute('view', 'y_line');
-      elem.setAttribute('row-pivots', '["timestamp"]');
-      elem.setAttribute('columns', '["ratio", "upper_bound", "lower_bound", "trigger_alert"]');
+      elem.setAttribute('row-pivots', '["TimeStamp"]');
+      elem.setAttribute('columns', '["ratio", "upperBound", "lowerBound", "priceAlert"]');
       elem.setAttribute('aggregates', JSON.stringify({
-        price_abc: 'avg',
-        price_def: 'avg',
+        TimeStamp: 'distinct count',
+        ABCStockPrice: 'avg',
+        DEFStockPrice: 'avg',
         ratio: 'avg',
-        timestamp: 'distinct count',
-        upper_bound: 'avg',
-        lower_bound: 'avg',
-        trigger_alert: 'avg',
+        upperBound: 'avg',
+        lowerBound: 'avg',
+        priceAlert: 'avg',
       }));
     }
   }
