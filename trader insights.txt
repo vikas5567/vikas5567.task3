@@ -1,0 +1,2 @@
+In the new display, if the chart crosses one of the two boundaries, there is a high chance that the trend of a stock will change to the opposite direction.
+This helps traders make better decision for when they should buy or sell based on whether the chart is higher or lower than the 2 boundary lines. 
