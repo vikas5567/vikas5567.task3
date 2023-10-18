@@ -143,7 +143,7 @@ def order_book(orders, book, stock_name):
 
 def generate_csv():
     """ Generate a CSV of order history. """
-    with open('test.csv', 'wb') as f:
+    with open(r"C:\Users\Jell_\forage-jpmc-swe-task-3\test.csv", 'wb') as f:
         writer = csv.writer(f)
         for t, stock, side, order, size in orders(market()):
             if t > MARKET_OPEN + SIM_LENGTH:
@@ -152,7 +152,7 @@ def generate_csv():
 
 def read_csv():
     """ Read a CSV or order history into a list. """
-    with open('test.csv', 'rt') as f:
+    with open(r"C:\Users\Jell_\forage-jpmc-swe-task-3\test.csv", 'rt') as f:
         for time, stock, side, order, size in csv.reader(f):
             yield dateutil.parser.parse(time), stock, side, float(order), int(size)
 
@@ -314,7 +314,7 @@ class App(object):
 # Main
 
 if __name__ == '__main__':
-    if not os.path.isfile('test.csv'):
+    if not os.path.isfile(r"C:\Users\Jell_\forage-jpmc-swe-task-3\test.csv"):
         print ("No data found, generating...")
         generate_csv()
     run(App())
