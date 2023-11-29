@@ -1,0 +1,13 @@
+JP Morgan Chases - Open Source Tool Perspective
+
+The importance of clear and comprehensive documentation in Perspective project means I have used this technology to create tools to analyse a finance model.  
+
+Open source allows marginalised voices to be heard in the mainstream;  producing technology that can help more people and has a wider customer base to launch to.  This business model widens global markets and results in greater profits being directed towards R&D of new tech development.  This in turn helps the customer.
+
+The experience of user Perspective has shown the importance of open source for developers and shown its benefits as outlined below.
+
+Open Source software allows leveling up in developing countries due to increased accessibility of knowledge.   A wider pool of lived experience to be drawn on means user interfaces are more robust to trends.  
+
+ The benefits of corporations engaging in open source projects are available for both developers and the industry as a whole.
+
+The impact of major companies like JPMorgan embracing open source is seen through the contributions made to an wide range of communities.  This way, technology stays relevant and useful this way.
