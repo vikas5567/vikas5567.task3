@@ -84,7 +84,7 @@ def orders(hist):
         order = round(normalvariate(px + (spd / d), spd / OVERLAP), 2)
         size  = int(abs(normalvariate(0, 100)))
         yield t, stock, side, order, size
-
+ 
 
 ################################################################################
 #

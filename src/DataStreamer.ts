@@ -3,6 +3,8 @@ export interface Order {
   size: number,
 }
 export interface ServerRespond {
+  top_bid_price: any;
+  top_ask_price: any;
   stock: string,
   top_bid: Order,
   top_ask: Order,
