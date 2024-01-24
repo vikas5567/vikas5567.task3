@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# default folder created by editor
+/.idea
+/.venv
+
 # testing
 /coverage
 
