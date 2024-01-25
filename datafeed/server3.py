@@ -73,7 +73,7 @@ def market(t0 = MARKET_OPEN):
     for hours, px, spd in zip(bwalk(*FREQ), bwalk(*PX), bwalk(*SPD)):
         yield t0, px, spd
         t0 += timedelta(hours = abs(hours))
-
+        
 def orders(hist):
     """ Generates a random set of limit orders (time, side, price, size) from
         a series of market conditions.
