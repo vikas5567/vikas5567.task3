@@ -1,0 +1,74 @@
+From 9d11e93c1b3dd09fef72f6e22052acf4aa0b4d15 Mon Sep 17 00:00:00 2001
+From: Shreeshailgouda Patil <shreeshailmax@gmail.com>
+Date: Tue, 27 Feb 2024 22:42:00 +0530
+Subject: [PATCH] update graph.tsx
+
+---
+ src/Graph.tsx | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
+
+diff --git a/src/Graph.tsx b/src/Graph.tsx
+index 277797d..a0e8ef3 100644
+--- a/src/Graph.tsx
++++ b/src/Graph.tsx
+@@ -1,5 +1,5 @@
+ import React, { Component } from 'react';
+-import { Table } from '@finos/perspective';
++import { Table,TableData } from '@finos/perspective';
+ import { ServerRespond } from './DataStreamer';
+ import { DataManipulator } from './DataManipulator';
+ import './Graph.css';
+@@ -23,10 +23,13 @@ class Graph extends Component<IProps, {}> {
+     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
+ 
+     const schema = {
+-      stock: 'string',
+-      top_ask_price: 'float',
+-      top_bid_price: 'float',
++      price_abc:'float',
++      price_def:'float',
++      ratio:'float',
+       timestamp: 'date',
++      upper_bond:'float',
++      lower_bond:'float',
++      trigger_alert:'float',
+     };
+ 
+     if (window.perspective && window.perspective.worker()) {
+@@ -36,23 +39,25 @@ class Graph extends Component<IProps, {}> {
+       // Load the `table` in the `<perspective-viewer>` DOM reference.
+       elem.load(this.table);
+       elem.setAttribute('view', 'y_line');
+-      elem.setAttribute('column-pivots', '["stock"]');
+       elem.setAttribute('row-pivots', '["timestamp"]');
+-      elem.setAttribute('columns', '["top_ask_price"]');
++      elem.setAttribute('columns', '["ratio", "lower_bound", "upper_bound", "trigger_alert"]');
+       elem.setAttribute('aggregates', JSON.stringify({
+-        stock: 'distinctcount',
+-        top_ask_price: 'avg',
+-        top_bid_price: 'avg',
+-        timestamp: 'distinct count',
++          price_abc: 'avg',
++          price_def: 'avg',
++          ratio: 'avg',
++          timestamp: 'distinct count',
++          upper_bound: 'avg',
++          lower_bound: 'avg',
++          trigger_alert: 'avg'
+       }));
+     }
+   }
+ 
+   componentDidUpdate() {
+     if (this.table) {
+-      this.table.update(
++      this.table.update([
+         DataManipulator.generateRow(this.props.data),
+-      );
++    ] as unknown as TableData);
+     }
+   }
+ }
+-- 
+2.43.0.windows.1
+
