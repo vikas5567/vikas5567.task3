@@ -5,6 +5,6 @@ Starter repo for task 3 of JPMC's Forage program
  
 2. Install the necessary dependencies by running `npm install` from the project repo
  
-3. Start the python server by running server3.py from the project repo like so: python datafeed/server3.py (note it’s important you run it from the root of the project repo)
+3. Start the python server by running server3.py from the project repo like so: `python datafeed/server3.py` (note it’s important you run it from the root of the project repo)
  
 4. Start the client by running `npm start` from the project repo
